@@ -24,7 +24,7 @@ function ProductRow({ product }) {
   );
 }
 
-function ProductTable({ products, filterText, inStockOnly }) {
+function ProductTable({ products = [], filterText = '', inStockOnly = false }) {
   const rows = [];
   let lastCategory = null;
 
@@ -105,5 +105,11 @@ const PRODUCTS = [
 ];
 
 export default function App() {
-  return <FilterableProductTable products={PRODUCTS} />;
+  return <>
+          <FilterableProductTable products={PRODUCTS} />
+          <h1>Frutas</h1>
+          <ProductTable products={PRODUCTS} filterText={'fruit'} />
+          <h1>En stock</h1>
+          <ProductTable products={PRODUCTS} inStockOnly={true} /> 
+        </>;
 }
