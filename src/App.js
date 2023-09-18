@@ -24,11 +24,21 @@ function ProductRow({ product }) {
   );
 }
 
-function ProductTable({ products }) {
+function ProductTable({ products, filterText, inStockOnly }) {
   const rows = [];
   let lastCategory = null;
 
   products.forEach((product) => {
+    if (
+      product.name.toLowerCase().indexOf(
+        filterText.toLowerCase()
+      ) === -1
+    ) {
+      return;
+    }
+    if (inStockOnly && !product.stocked) {
+      return;
+    }
     if (product.category !== lastCategory) {
       rows.push(
         <ProductCategoryRow
@@ -78,7 +88,7 @@ function FilterableProductTable({ products }) {
 
   return (
     <div>
-      <SearchBar filterText={filterText} inStockOnly={inStockOnly} 
+      <SearchBar filterText={filterText} inStockOnly={inStockOnly}
         onFilterTextChange={setFilterText} onInStockOnlyChange={setInStockOnly} />
       <ProductTable filterText={filterText} inStockOnly={inStockOnly} products={products} />
     </div>
